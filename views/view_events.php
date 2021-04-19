@@ -36,7 +36,7 @@ function viewEvent($conn) {
         array_push($results, $each);
         // if event_id already exists, add to existing entry of results -- uncomment the below lines and remove the array_push line above to group the events by event_id
 
-        // if (array_key_exists($row['event_id'], $results)) { 
+        // if (array_key_exists($row['event_id'], $results)) {
         //     $before = $results[$row['event_id']];
         //     array_push($before, $each);
         //     $results[$id] = $before;
@@ -48,5 +48,5 @@ function viewEvent($conn) {
 }
 
 //view_events.js will pick this up
-echo print_r(viewEvent($conn), true); 
+echo print_r(viewEvent($conn), true);
 ?>
