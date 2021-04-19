@@ -43,10 +43,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <head>
     <title>Sign in</title>
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap-4.0.0.css">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/font-awesome.css">
-    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
 </head>
 <body>
