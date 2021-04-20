@@ -1,9 +1,17 @@
+<?php
+session_start();
+
+if (isset($_SESSION["loggedUser"])) {
+    header("location: home.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html>
 
 <head>
     <title>Sign in</title>
-    <link rel="stylesheet" href="../css/bootstrap-4.0.0.css">
+    <link rel="stylesheet" href="../css/bootstrap-4.0.0.min.css">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/font-awesome.css">
     <script src="../js/jquery.min.js"></script>

@@ -1,3 +1,24 @@
+<?php
+
+require_once "../models/User.php";
+session_start();
+
+if (!isset($_SESSION["loggedUser"])) {
+    if (isset($_COOKIE['loggedUsername'])) {
+        require_once "../Repository/UserRepository.php";
+        require_once "../database/database_client.php";
+        $userRepository = new UserRepository($mysqli);
+        $user = $userRepository->getByUsername($_COOKIE['loggedUsername']);
+        if ($user != null) {
+            $_SESSION["loggedUser"] = $user;
+        }
+    } else {
+        header("location: login.php");
+        exit();
+    }
+}
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,8 +26,8 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>Colored Card | Bootstrap Based Admin Template - Material Design</title>
     <link rel="icon" href="../../../../favicon.ico" type="image/x-icon">
-    <link href="../css/web-font.css" rel="stylesheet" type="text/css">
-    <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href="../css/web-font.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/bootstrap-3.3.6.min.css" rel="stylesheet">
     <link href="../css/animate.min.css" rel="stylesheet" />
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/all-themes.min.css" rel="stylesheet" />

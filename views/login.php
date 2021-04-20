@@ -1,11 +1,10 @@
 <?php
-require_once "../views/partials/redirect_to_index_check.php";
 require_once "../Repository/UserRepository.php";
 require_once "../database/database_client.php";
 
 $username = $password = "";
 $usernameError = $passError = $login_error = "";
-
+session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = trim($_POST["username"]);
     if (empty(trim($_POST["username"]))) {
