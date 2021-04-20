@@ -4,7 +4,6 @@ require_once "../models/User.php";
 require_once "IUserRepository.php";
 
 class UserRepository implements IUserRepository{
-
     const TABLE = 'user';
     private $mysqli;
 
