@@ -2,7 +2,7 @@
 session_start();
 
 if (isset($_SESSION["loggedUser"])) {
-    header("location: index.php");
+    header("location: home.php");
     exit();
 }
 ?>
