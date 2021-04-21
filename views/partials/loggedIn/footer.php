@@ -3,6 +3,12 @@
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/admin.js"></script>
     <script src="../js/colored.js"></script>
-
+    <?php
+    if (isset($scripts)) {
+      foreach($scripts as $script_path) {
+         echo '<script src="'.$script_path.'"></script>';
+      }
+    }
+    ?>
 </body>
 </html>

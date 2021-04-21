@@ -18,19 +18,37 @@ if (!isset($_SESSION["loggedUser"])) {
     }
 }
 
+function getTitle(){
+    global $title;
+    if (isset($title)) {
+        return $title;
+    }
+    else {
+        return "Home";
+    };
+}
+
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Colored Card | Bootstrap Based Admin Template - Material Design</title>
+    <title><?php echo getTitle(); ?></title>
     <link rel="icon" href="../../../../favicon.ico" type="image/x-icon">
     <link href="../css/web-font.min.css" rel="stylesheet" type="text/css">
     <link href="../css/bootstrap-3.3.6.min.css" rel="stylesheet">
     <link href="../css/animate.min.css" rel="stylesheet" />
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/all-themes.min.css" rel="stylesheet" />
+<?php
+    if (isset($array_css)){
+        foreach($array_css as $css_path)
+        {
+            echo '<link href="/'.$css_path.'" rel="stylesheet">';
+        }
+    }
+?>
 </head>
 <body class="theme-red">
     <div class="page-loader-wrapper">
@@ -62,7 +80,7 @@ if (!isset($_SESSION["loggedUser"])) {
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="home.php">INFO263 Group Project</a>
+                <a class="navbar-brand">INFO263 Group Project - <?php echo getTitle();?></a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
