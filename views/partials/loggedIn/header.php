@@ -45,7 +45,7 @@ function getTitle(){
     if (isset($array_css)){
         foreach($array_css as $css_path)
         {
-            echo '<link href="/'.$css_path.'" rel="stylesheet">';
+            echo '<link href="'.$css_path.'" rel="stylesheet">';
         }
     }
 ?>
