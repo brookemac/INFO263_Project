@@ -24,6 +24,12 @@
                         <span>Home</span>
                     </a>
                 </li>
+                <li>
+                    <a href="view_current_state.php">
+                        <i class="material-icons">view_module</i>
+                        <span>See current state</span>
+                    </a>
+                </li>
             </ul>
         </div>
         <div class="legal">
