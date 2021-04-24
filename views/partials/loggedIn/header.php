@@ -39,7 +39,6 @@ function getTitle(){
     <link href="../css/web-font.min.css" rel="stylesheet" type="text/css">
     <link href="../css/bootstrap-3.3.6.min.css" rel="stylesheet">
     <link href="../css/animate.min.css" rel="stylesheet" />
-    <link href="../css/style.css" rel="stylesheet">
     <link href="../css/all-themes.min.css" rel="stylesheet" />
 <?php
     if (isset($array_css)){
@@ -49,6 +48,7 @@ function getTitle(){
         }
     }
 ?>
+    <link href="../css/style.css" rel="stylesheet">
 </head>
 <body class="theme-red">
     <div class="page-loader-wrapper">
