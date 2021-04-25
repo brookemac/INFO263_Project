@@ -24,6 +24,12 @@
                         <span>Home</span>
                     </a>
                 </li>
+                <li>
+                    <a href="add_event.php">
+                        <i class="material-icons">assignment</i>
+                        <span>Add Event</span>
+                    </a>
+                </li>
             </ul>
         </div>
         <div class="legal">
