@@ -1,7 +1,12 @@
 ﻿<?php
 $array_css = array('../css/bootstrap-material-datetimepicker.css', '../css/waves.min.css');
-require_once "../database/database_client.php";
 $title = "Add event";
+
+require_once "../database/database_client.php";
+require_once "../models/Cluster.php";
+require_once "../Repository/ClusterRepository.php";
+require_once "../models/Group.php";
+require_once "../Repository/GroupRepository.php";
 include 'partials/loggedIn/header.php';
 ?>
     <div class="container-fluid">
@@ -12,7 +17,7 @@ include 'partials/loggedIn/header.php';
                         <h2>ADDING AN EVENT</h2>
                     </div>
                     <div class="body">
-                        <form id="wizard_with_validation" method="POST">
+                        <form id="wizard_with_validation" method="POST" action="post/add_event.php">
                             <h3>Adding an event</h3>
                             <fieldset>
                                 <div class="form-group form-float">
@@ -25,6 +30,17 @@ include 'partials/loggedIn/header.php';
                                     <input id="acceptTerms-2" name="event_status" type="checkbox">
                                     <label for="acceptTerms-2">Status</label>
                                 </div>
+                                <?php
+                                    if (isset($_SESSION['productAdded'])) {
+                                        unset($_SESSION['productAdded']);
+                                ?>
+                                <div class="alert alert-success alert-dismissible">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <strong>Event added successfuly!</strong>
+                                </div>
+                                <?php
+                                    }
+                                ?>
                             </fieldset>
                             <h3>Adding action</h3>
                             <fieldset>
@@ -33,15 +49,15 @@ include 'partials/loggedIn/header.php';
                                         <div class="form-line">
                                             <b>Cluster*</b>
                                             <?php
-                                                $query = 'SELECT * FROM info263_front_project.vw_display_cluster;';
-                                                $result = mysqli_query($mysqli, $query);
+                                                $clusterRepository = new ClusterRepository($mysqli);
+                                                $clusters = $clusterRepository->getAll();
                                             ?>
                                             <select class="form-control" name="action_cluster" required>
                                                 <option value="">--Please Select--</option>
                                                 <?php
-                                                while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+                                                foreach ($clusters as $cluster) {
                                                 ?>
-                                                <option value="<?php echo $row['cluster_id']; ?>"><?php echo $row['cluster_name']; ?></option>
+                                                <option value="<?php echo $cluster->getId(); ?>"><?php echo $cluster->getName(); ?></option>
                                                 <?php
                                                 }
                                                 ?>
@@ -51,7 +67,7 @@ include 'partials/loggedIn/header.php';
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group form-float">
-                                        <b>Start offset Time (24 hour)*</b>
+                                        <b>Start offset Time*</b>
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="material-icons">access_time</i>
@@ -64,7 +80,7 @@ include 'partials/loggedIn/header.php';
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group form-float">
-                                        <b>Duration offset Time (24 hour)*</b>
+                                        <b>Duration offset Time*</b>
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="material-icons">access_time</i>
@@ -85,18 +101,17 @@ include 'partials/loggedIn/header.php';
                                                 <b>Group</b>
                                                 <div class="form-line">
                                                         <?php
-                                                            $query = 'SELECT * FROM info263_front_project.vw_display_group;';
-                                                            $result = mysqli_query($mysqli, $query);
+                                                            $groupRepository = new GroupRepository($mysqli);
+                                                            $groups = $groupRepository->getAll();
                                                         ?>
                                                         <select class="form-control" name="daily_group_1" required>
                                                             <option value="">--Please Select--</option>
                                                             <?php
-                                                            while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+                                                            foreach ($groups as $group) {
                                                             ?>
-                                                            <option value="<?php echo $row['group_id']; ?>"><?php echo $row['machine_group']; ?></option>
+                                                            <option value="<?php echo $group->getId(); ?>"><?php echo $group->getName(); ?></option>
                                                             <?php
                                                             }
-                                                            $mysqli->close();
                                                             ?>
                                                         </select>
                                                     </select>

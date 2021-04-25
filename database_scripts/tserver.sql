@@ -618,18 +618,54 @@ END ;;
 
 DELIMITER ;
 
+DROP FUNCTION IF EXISTS add_event;
+
+
+DELIMITER ;;
+CREATE FUNCTION add_event(
+	name VARCHAR(255),
+	status smallint
+) RETURNS INT
+DETERMINISTIC
+BEGIN
+	DECLARE _event_id INT;
+    SELECT event_id INTO _event_id FROM front_event fe WHERE fe.event_name = name LIMIT 1;
+    if _event_id IS NULL THEN
+      INSERT INTO front_event (event_name, status) values (name, status);
+	  SELECT LAST_INSERT_ID() INTO _event_id FROM front_event LIMIT 1;
+    END IF;
+    RETURN _event_id;
+END ;;
+
+
+
 DROP PROCEDURE IF EXISTS add_daily;
 
 DELIMITER ;;
 
 CREATE PROCEDURE add_daily(
-    IN id INT,
-    [IN group_id VARCHAR(255),
+    IN event_id INT,
+    IN group_id VARCHAR(255),
     IN day INT,
-    IN start TIME]
+    IN start TIME
 )
 BEGIN
-	insert into front_daily (event_id, group_id, day_of_week, start_time) values (id, group_id, day, start);
+	insert into front_daily (event_id, group_id, day_of_week, start_time) values (event_id, group_id, day, start);
+END ;;
+
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS add_weekly;
+
+DELIMITER ;;
+
+CREATE PROCEDURE add_weekly(
+    IN event_id INT,
+    IN week_of_year INT,
+    IN event_year INT
+)
+BEGIN
+	insert into front_weekly (event_id, week_of_year, event_year) values (event_id, week_of_year, event_year);
 END ;;
 
 DELIMITER ;
@@ -645,7 +681,7 @@ CREATE PROCEDURE add_action(
     IN length TIME
 )
 BEGIN
-	insert into front_action (event_id, time_offset, cluster_id, activate) values (id, offset, 3, 0);
+	  insert into front_action (event_id, time_offset, cluster_id, activate) values (id, offset, 3, 0);
     insert into front_action (event_id, time_offset, cluster_id, activate) values (id, offset, cluster, 1);
     insert into front_action (event_id, time_offset, cluster_id, activate) values (id, length, cluster, 0);
     insert into front_action (event_id, time_offset, cluster_id, activate) values (id, length, 3, 1);

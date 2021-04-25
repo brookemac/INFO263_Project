@@ -4,7 +4,7 @@ $(function () {
         let content = $('#daily_option_1').clone();
         content.attr('id', 'daily_option_' + dailyId);
         content.find('input[type=text]').val('');
-        content.find('error').remove();
+        content.find('label.error').remove();
         content.find('select').val('');
         content.find('select[name="daily_group_1"]').attr('name', 'daily_group_' + dailyId);
         content.find('select[name="daily_week_1"]').attr('name', 'daily_week_' + dailyId);
@@ -37,7 +37,7 @@ $(function () {
         content.attr('id', 'weekly_option_' + weeklyId);
         content.find('input[type=text]').val('');
         content.find('select').val('');
-        content.find('error').remove();
+        content.find('label.error').remove();
         content.find('select[name="weekly_week_of_year_1"]').attr('name', 'weekly_week_of_year_' + weeklyId);
         content.find('select[name="weekly_year_1"]').attr('name', 'weekly_year_' + weeklyId);
         weeklyId += 1;
@@ -64,5 +64,53 @@ $(function () {
         date: false
     });
 
-    $('.time24').inputmask('hh:mm:ss', { placeholder: '__:__:__', alias: 'time24', hourFormat: '24' });
+    $('.time24').inputmask('[-]99:99:99',{ "clearIncomplete": true, skipOptionalPartCharacter: "-" });
+
+    $(function () {
+        $('.btn-notification').on('click', function () {
+            var placementFrom = $(this).data('placement-from');
+            var placementAlign = $(this).data('placement-align');
+            var animateEnter = $(this).data('animate-enter');
+            var animateExit = $(this).data('animate-exit');
+            var colorName = $(this).data('color-name');
+            var message = $(this).data('message');
+
+            showNotification(colorName, message, placementFrom, placementAlign, animateEnter, animateExit);
+        });
+    });
+
+    function showNotification(colorName, text, placementFrom, placementAlign, animateEnter, animateExit) {
+        if (colorName === null || colorName === '') { colorName = 'bg-black'; }
+        if (animateEnter === null || animateEnter === '') { animateEnter = 'animated fadeInDown'; }
+        if (animateExit === null || animateExit === '') { animateExit = 'animated fadeOutUp'; }
+        var allowDismiss = true;
+
+        $.notify({
+            message: text
+        },
+            {
+                type: colorName,
+                allow_dismiss: allowDismiss,
+                newest_on_top: true,
+                timer: 1000,
+                placement: {
+                    from: placementFrom,
+                    align: placementAlign
+                },
+                animate: {
+                    enter: animateEnter,
+                    exit: animateExit
+                },
+                template: '<div data-notify="container" class="bootstrap-notify-container alert alert-dismissible {0} ' + (allowDismiss ? "p-r-35" : "") + '" role="alert">' +
+                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                '<span data-notify="icon"></span> ' +
+                '<span data-notify="title">{1}</span> ' +
+                '<span data-notify="message">{2}</span>' +
+                '<div class="progress" data-notify="progressbar">' +
+                '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+                '</div>' +
+                '<a href="{3}" target="{4}" data-notify="url"></a>' +
+                '</div>'
+            });
+    }
 });
