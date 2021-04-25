@@ -660,6 +660,29 @@ CREATE OR REPLACE VIEW vw_display_view
 AS select event_name, cluster_name, date, time, activate, machine_group, time_offset, event_id, group_id
 FROM vw_front_event natural join front_action;
 
+
+--
+-- This view is similar to vw_front_event, but it shows the data to be filtered
+--
+
+CREATE
+    ALGORITHM = UNDEFINED
+    DEFINER = `root`@`localhost`
+    SQL SECURITY DEFINER
+VIEW `vw_front_event_grouped` AS
+    SELECT
+        MIN(ADDTIME(CAST(`vw_front_event`.`date` AS DATETIME),
+                `vw_front_event`.`time`)) AS `start_time`,
+        MAX(ADDTIME(CAST(`vw_front_event`.`date` AS DATETIME),
+                `vw_front_event`.`time`)) AS `end_time`,
+        `vw_front_event`.`event_name` AS `event_name`,
+        `vw_front_event`.`cluster_name` AS `cluster_name`,
+        `vw_front_event`.`machine_group` AS `machine_group`
+    FROM
+        `vw_front_event`
+    GROUP BY `vw_front_event`.`event_id` , `vw_front_event`.`cluster_id` , `vw_front_event`.`group_id` , `vw_front_event`.`daily_id` , `vw_front_event`.`weekly_id`
+    ORDER BY `vw_front_event`.`event_name` , `vw_front_event`.`cluster_name` , `vw_front_event`.`machine_group`
+
 --
 -- Structure for the user table
 --
