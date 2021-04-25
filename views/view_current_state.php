@@ -4,25 +4,10 @@ $array_css = array('../css/dataTables.bootstrap.min.css');
 include 'partials/loggedIn/header.php';
 require_once "../database/database_client.php";
 
-function viewEvent() {
+function getEvents() {
     global $mysqli;
-    //SQL statement to get all event details from database
-    $dateFilter = null;
-    $eventName = null;
-    if (isset($_GET['date'])) {
-        $dateFilter = $_GET['date'];
-    }
-    if (isset($_GET['end_time'])) {
-        $eventName = $_GET['end_time'];
-    }
     $query = "select * from vw_front_event_grouped";
-    if ($dateFilter != null || $eventName != null) {
-        $query .= " where 1=1";
-        if ($dateFilter != null) {
-            $query .= " and start_time = '{$dateFilter}'";
-        }
-    }
-    $query .= " order by start_time desc, event_name";
+    $query .= " where date(start_time) >= date(now()) order by start_time desc, event_name";
     $result = mysqli_query($mysqli, $query);
     $results = array();
     $events = array();
@@ -39,21 +24,35 @@ function viewEvent() {
     }
     return $results;
 }
-$myArray = viewEvent();
+$myArray = getEvents();
 ?>
     <div class="row clearfix">
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="GET">
-            <span>Provide the event date</span>
-            <input type="text" name="date" />
-        </form>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
                 <div class="header">
                     <h2>
-                        EXPORTABLE TABLE
+                        Events
                     </h2>
                 </div>
                 <div class="body">
+                    <div class="row clearfix">
+                        <div class="col-xs-4">
+                            <div>
+                                <h2 class="card-inside-title">Range</h2>
+                            </div>
+                            <div class="input-daterange input-group" id="bs_datepicker_range_container">
+                                <div class="form-line">
+                                    <input type="text" class="form-control" placeholder="Date start...">
+                                </div>
+                                <span class="input-group-addon">to</span>
+                                <div class="form-line">
+                                    <input type="text" class="form-control" placeholder="Date end...">
+                                </div>
+                                <span class="input-group-addon"></span>
+                                <button type="button" class="btn bg-blue waves-effect">Apply range</button>
+                            </div>
+                        </div>
+                    </div>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                             <thead>
