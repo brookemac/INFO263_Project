@@ -681,7 +681,7 @@ CREATE PROCEDURE add_action(
     IN length TIME
 )
 BEGIN
-	  insert into front_action (event_id, time_offset, cluster_id, activate) values (id, offset, 3, 0);
+	insert into front_action (event_id, time_offset, cluster_id, activate) values (id, offset, 3, 0);
     insert into front_action (event_id, time_offset, cluster_id, activate) values (id, offset, cluster, 1);
     insert into front_action (event_id, time_offset, cluster_id, activate) values (id, length, cluster, 0);
     insert into front_action (event_id, time_offset, cluster_id, activate) values (id, length, 3, 1);

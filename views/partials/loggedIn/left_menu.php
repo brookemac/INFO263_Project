@@ -24,10 +24,16 @@
                         <span>Home</span>
                     </a>
                 </li>
-                <li>
+				<li>
                     <a href="add_event.php">
                         <i class="material-icons">assignment</i>
                         <span>Add Event</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="view_current_state.php">
+                        <i class="material-icons">view_module</i>
+                        <span>See current state</span>
                     </a>
                 </li>
             </ul>
