@@ -1,5 +1,6 @@
 <?php
 
+require_once "../models/User.php";
 require_once "interfaces/IUserRepository.php";
 require_once "BaseRepository.php";
 
