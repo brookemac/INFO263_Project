@@ -42,7 +42,7 @@ echo "Start typing to select your event to then view its properties";
 
     <form>
 
-        <label><input placeholder="Search..." list="event_name"onchange="showProperties(this.value)"/></label>
+        <label><input placeholder="Search..." id="name" list="event_name" autocomplete='off' onchange="showProperties(this.value)"/></label>
         <datalist id="event_name" class="dle">
             <?php
             while($row=mysqli_fetch_array($result))
