@@ -14,7 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["event_status"]) && !empty(trim($_POST["event_status"]))) {
         $status = 1;
     }
-    $actionClusterId = trim($_POST["action_cluster"]);
+    $actionClusterIdToActivate = trim($_POST["action_cluster_to_activate"]);
+    $actionClusterIdToDeactivate = trim($_POST["action_cluster_to_deactivate"]);
     $actionOffset = trim($_POST["action_start_offset"]);
     $actionDurationOffset = trim($_POST["action_duration_offset"]);
     $dailyList = array();
@@ -47,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
     $actionRepository = new ActionRepository($mysqli);
-    $actionRepository->addAction($event->getId(), $actionClusterId, $actionOffset, $actionDurationOffset);
+    $actionRepository->addAction($event->getId(), $actionClusterIdToActivate, $actionClusterIdToDeactivate, $actionOffset, $actionDurationOffset);
     $dailyRepository = new DailyRepository($mysqli);
     $dailyRepository->addDailyList($dailyList);
     $weeklyRepository = new WeeklyRepository($mysqli);

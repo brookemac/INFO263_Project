@@ -637,12 +637,12 @@ BEGIN
     RETURN _event_id;
 END ;;
 
+DELIMITER ;
 
 
 DROP PROCEDURE IF EXISTS add_daily;
 
 DELIMITER ;;
-
 CREATE PROCEDURE add_daily(
     IN event_id INT,
     IN group_id VARCHAR(255),
@@ -676,15 +676,16 @@ DELIMITER ;;
 
 CREATE PROCEDURE add_action(
     IN id INT,
-    IN cluster INT,
+    IN clusterToActivate INT,
+    IN clusterToDeactivate INT,
     IN offset TIME,
     IN length TIME
 )
 BEGIN
-	insert into front_action (event_id, time_offset, cluster_id, activate) values (id, offset, 3, 0);
-    insert into front_action (event_id, time_offset, cluster_id, activate) values (id, offset, cluster, 1);
-    insert into front_action (event_id, time_offset, cluster_id, activate) values (id, length, cluster, 0);
-    insert into front_action (event_id, time_offset, cluster_id, activate) values (id, length, 3, 1);
+	insert into front_action (event_id, time_offset, cluster_id, activate) values (id, offset, clusterToDeactivate, 0);
+    insert into front_action (event_id, time_offset, cluster_id, activate) values (id, offset, clusterToActivate, 1);
+    insert into front_action (event_id, time_offset, cluster_id, activate) values (id, length, clusterToActivate, 0);
+    insert into front_action (event_id, time_offset, cluster_id, activate) values (id, length, clusterToDeactivate, 1);
 END ;;
 
 DELIMITER ;

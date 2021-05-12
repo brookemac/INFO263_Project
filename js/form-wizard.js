@@ -50,8 +50,11 @@ $(function () {
             $(element).parents('.form-group').append(error);
         },
         rules: {
-            'confirm': {
-                equalTo: '#password'
+            'action_start_offset': {
+                startOffset: true
+            },
+            'action_duration_offset': {
+                durationOffset: true
             }
         }
     });
