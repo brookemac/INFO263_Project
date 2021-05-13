@@ -47,12 +47,27 @@ include 'partials/loggedIn/header.php';
                                 <div class="col-md-5">
                                     <div class="form-group form-float">
                                         <div class="form-line">
-                                            <b>Cluster*</b>
+                                            <b>Cluster to activate*</b>
                                             <?php
                                                 $clusterRepository = new ClusterRepository($mysqli);
                                                 $clusters = $clusterRepository->getAll();
                                             ?>
-                                            <select class="form-control" name="action_cluster" required>
+                                            <select class="form-control" name="action_cluster_to_activate" required>
+                                                <option value="">--Please Select--</option>
+                                                <?php
+                                                foreach ($clusters as $cluster) {
+                                                ?>
+                                                <option value="<?php echo $cluster->getId(); ?>"><?php echo $cluster->getName(); ?></option>
+                                                <?php
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <b>Cluster to deactivate*</b>
+                                            <select class="form-control" name="action_cluster_to_deactivate" required>
                                                 <option value="">--Please Select--</option>
                                                 <?php
                                                 foreach ($clusters as $cluster) {
@@ -73,7 +88,7 @@ include 'partials/loggedIn/header.php';
                                                 <i class="material-icons">access_time</i>
                                             </span>
                                             <div class="form-line">
-                                                <input type="text" name="action_start_offset" class="form-control time24" placeholder="Ex: -00:15:00" required>
+                                                <input type="text" name="action_start_offset" class="form-control time24" placeholder="Ex: -00:15:00" startOffset>
                                             </div>
                                         </div>
                                     </div>
@@ -86,7 +101,7 @@ include 'partials/loggedIn/header.php';
                                                 <i class="material-icons">access_time</i>
                                             </span>
                                             <div class="form-line">
-                                                <input type="text" name="action_duration_offset" class="form-control time24" placeholder="Ex: 23:59:00" required>
+                                                <input type="text" name="action_duration_offset" class="form-control time24" placeholder="Ex: 23:59:00" durationOffset>
                                             </div>
                                         </div>
                                     </div>

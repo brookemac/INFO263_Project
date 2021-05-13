@@ -1,6 +1,6 @@
 <?php
 interface IActionRepository
 {
-    public function addAction($eventId, $clusterId, $offset, $duration);
+    public function addAction($eventId, $clusterIdToActivate, $clusterIdToDeactivate, $offset, $duration);
 }
 ?>
