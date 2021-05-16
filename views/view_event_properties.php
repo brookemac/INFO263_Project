@@ -2,7 +2,9 @@
 include 'partials/loggedIn/header.php'
 ?>
 
+
 <?php
+require_once "../database/database_client.php";
 echo "Start typing to select your event to then view its properties";
 ?>
 
@@ -29,14 +31,7 @@ echo "Start typing to select your event to then view its properties";
     <body>
 
     <?php
-    $conn=mysqli_connect("localhost", "root", "cryptic", "info263_front_project");
-
-    if(mysqli_connect_errno())
-    {
-        echo "Connection Failed".mysqli_connect_error();
-    }
-
-    $result=mysqli_query($conn, "select * from front_event");
+    $result=mysqli_query($mysqli, "select * from front_event ORDER BY event_name ASC;");
     ?>
 
 
@@ -61,13 +56,11 @@ echo "Start typing to select your event to then view its properties";
 
     <script>
 
-        var input = document.querySelector("#name"), // Selects the input.
-            datalist = document.querySelector("datalist"); // Selects the datalist.
+        var input = document.querySelector("#name"),
+            datalist = document.querySelector("datalist");
 
-        // Adds a keyup listener on the input.
         input.addEventListener("keyup", (e) => {
 
-            // If input value is larger or equal than 2 chars, adding "event_name" on ID attribute.
             if (e.target.value.length >= 3) {
                 datalist.setAttribute("id", "event_name");
             } else {
@@ -75,9 +68,11 @@ echo "Start typing to select your event to then view its properties";
             }
         });
 
-        // I had to include your doValidate() function otherwise I would get an error while validaing.
-        function doValidate() {};
     </script>
+
+<?php
+mysqli_close($mysqli);
+?>
 
 
 

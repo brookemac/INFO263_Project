@@ -18,16 +18,14 @@ th {text-align: left;}
 <body>
 
 <?php
+require_once "../database/database_client.php";
 $q = $_GET['q'];
 
-$con = mysqli_connect('localhost', 'root', 'cryptic', 'info263_front_project');
-if (!$con) {
-    die('Could not connect: ' . mysqli_error($con));
-}
 
-mysqli_select_db($con, 'info263_front_project');
+
+mysqli_select_db($mysqli, 'info263_front_project');
 $sql = "SELECT * FROM info263_front_project.vw_display_view WHERE event_name like '%{$q}%'";
-$result = mysqli_query($con, $sql);
+$result = mysqli_query($mysqli, $sql);
 
 echo "<table>
 <tr>
@@ -55,7 +53,7 @@ while($row = mysqli_fetch_array($result)) {
     echo "</tr>";
 }
 echo "</table>";
-mysqli_close($con);
+mysqli_close($mysqli);
 ?>
 </body>
 </html>
