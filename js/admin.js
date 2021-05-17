@@ -94,6 +94,10 @@ $.AdminBSB.leftSideBar = {
             $this.toggleClass('toggled');
             $content.slideToggle(320);
         });
+        if (typeof Waves != 'undefined'){
+            Waves.attach('.menu .list a', ['waves-block']);
+            Waves.init();
+        }
 
         //Set menu height
         _this.setMenuHeight(true);
@@ -159,38 +163,6 @@ $.AdminBSB.leftSideBar = {
         return $('body').hasClass('overlay-open');
     }
 };
-//==========================================================================================================================
-
-/* Right Sidebar - Function ================================================================================================
-*  You can manage the right sidebar menu options
-*
-*/
-$.AdminBSB.rightSideBar = {
-    activate: function () {
-        var _this = this;
-        var $sidebar = $('#rightsidebar');
-        var $overlay = $('.overlay');
-
-        //Close sidebar
-        $(window).click(function (e) {
-            var $target = $(e.target);
-            if (e.target.nodeName.toLowerCase() === 'i') { $target = $(e.target).parent(); }
-
-            if (!$target.hasClass('js-right-sidebar') && _this.isOpen() && $target.parents('#rightsidebar').length === 0) {
-                if (!$target.hasClass('bars')) $overlay.fadeOut();
-                $sidebar.removeClass('open');
-            }
-        });
-
-        $('.js-right-sidebar').on('click', function () {
-            $sidebar.toggleClass('open');
-            if (_this.isOpen()) { $overlay.fadeIn(); } else { $overlay.fadeOut(); }
-        });
-    },
-    isOpen: function () {
-        return $('.right-sidebar').hasClass('open');
-    }
-}
 //==========================================================================================================================
 
 /* Searchbar - Function ================================================================================================
@@ -452,7 +424,6 @@ $.AdminBSB.browser = {
 $(function () {
     $.AdminBSB.browser.activate();
     $.AdminBSB.leftSideBar.activate();
-    $.AdminBSB.rightSideBar.activate();
     $.AdminBSB.navbar.activate();
     $.AdminBSB.dropdownMenu.activate();
     $.AdminBSB.input.activate();

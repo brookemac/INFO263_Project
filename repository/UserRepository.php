@@ -1,20 +1,11 @@
 <?php
 
 require_once "../models/User.php";
-require_once "IUserRepository.php";
+require_once "interfaces/IUserRepository.php";
+require_once "BaseRepository.php";
 
-class UserRepository implements IUserRepository{
+class UserRepository extends BaseRepository implements IUserRepository {
     const TABLE = 'user';
-    private $mysqli;
-
-    public function __construct($mysqli) {
-        $this->mysqli = $mysqli;
-    }
-
-    function __destruct() {
-        $this->mysqli->close();
-    }
-
     public function getByUsername($username) {
         $user = null;
         $sql = "SELECT user_id, name, username, email, password FROM ".self::TABLE." WHERE username = ?";
