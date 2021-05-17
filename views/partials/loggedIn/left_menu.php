@@ -24,6 +24,12 @@
                         <span>Home</span>
                     </a>
                 </li>
+                <li>
+                    <a href="view_event_properties.php">
+                        <i class="material-icons">view_list</i>
+                        <span>View Event Properties</span>
+                    </a>
+                </li>
 				<li>
                     <a href="add_event.php">
                         <i class="material-icons">assignment</i>
