@@ -31,7 +31,7 @@ CREATE TABLE `front_action` (
   PRIMARY KEY (`action_id`),
   KEY `event_fk_idx` (`event_id`),
   KEY `cluster_fk_idx` (`cluster_id`),
-  CONSTRAINT `actiion_event_fk` FOREIGN KEY (`event_id`) REFERENCES `front_event` (`event_id`),
+  CONSTRAINT `actiion_event_fk` FOREIGN KEY (`event_id`) REFERENCES `front_event` (`event_id`) ON DELETE CASCADE,
   CONSTRAINT `action_cluster_fk` FOREIGN KEY (`cluster_id`) REFERENCES `front_cluster` (`cluster_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=830 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -126,7 +126,7 @@ CREATE TABLE `front_daily` (
   KEY `event_fk_idx` (`event_id`),
   KEY `dow_fk_idx` (`day_of_week`),
   CONSTRAINT `dow_fk` FOREIGN KEY (`day_of_week`) REFERENCES `front_day_of_week` (`day_of_week`),
-  CONSTRAINT `event_fk` FOREIGN KEY (`event_id`) REFERENCES `front_event` (`event_id`),
+  CONSTRAINT `event_fk` FOREIGN KEY (`event_id`) REFERENCES `front_event` (`event_id`) ON DELETE CASCADE,
   CONSTRAINT `group_fk` FOREIGN KEY (`group_id`) REFERENCES `front_group` (`group_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=732 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -213,7 +213,7 @@ CREATE TABLE `front_event_log` (
   KEY `log_weekly_fk_idx` (`weekly_id`),
   CONSTRAINT `log_action_fk` FOREIGN KEY (`action_id`) REFERENCES `front_action` (`action_id`),
   CONSTRAINT `log_daily_fk` FOREIGN KEY (`daily_id`) REFERENCES `front_daily` (`event_id`),
-  CONSTRAINT `log_event_fk` FOREIGN KEY (`event_id`) REFERENCES `front_event` (`event_id`),
+  CONSTRAINT `log_event_fk` FOREIGN KEY (`event_id`) REFERENCES `front_event` (`event_id`) ON DELETE CASCADE,
   CONSTRAINT `log_weekly_fk` FOREIGN KEY (`weekly_id`) REFERENCES `front_weekly` (`weekly_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5485 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -294,7 +294,7 @@ CREATE TABLE `front_weekly` (
   `event_year` year(4) NOT NULL,
   PRIMARY KEY (`weekly_id`),
   KEY `weekly_event_fk_idx` (`event_id`),
-  CONSTRAINT `weekly_event_fk` FOREIGN KEY (`event_id`) REFERENCES `front_event` (`event_id`)
+  CONSTRAINT `weekly_event_fk` FOREIGN KEY (`event_id`) REFERENCES `front_event` (`event_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=289 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -734,6 +734,17 @@ AS
         `vw_front_event`
     GROUP BY `vw_front_event`.`event_id` , `vw_front_event`.`cluster_id` , `vw_front_event`.`group_id` , `vw_front_event`.`daily_id` , `vw_front_event`.`weekly_id`
     ORDER BY `vw_front_event`.`event_name` , `vw_front_event`.`cluster_name` , `vw_front_event`.`machine_group`;
+
+--
+-- This view is similar to vw_front_event but it aggregates the rows to get start and end time in the same row
+--
+
+CREATE OR REPLACE VIEW vw_front_event_raw
+AS
+    SELECT
+        event_id, event_name, status
+    FROM front_event
+    ORDER BY event_name ASC;
 
 --
 -- Structure for the user table
