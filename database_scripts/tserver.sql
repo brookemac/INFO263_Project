@@ -668,6 +668,20 @@ BEGIN
 	insert into front_weekly (event_id, week_of_year, event_year) values (event_id, week_of_year, event_year);
 END ;;
 
+DROP PROCEDURE IF EXISTS add_user;
+
+DELIMITER ;;
+
+CREATE PROCEDURE add_user(    
+    IN name VARCHAR(32),
+    IN email VARCHAR(32),
+    IN username VARCHAR(32),
+    IN password VARCHAR(64)
+)
+BEGIN
+  INSERT INTO user(name, email, username, password) VALUES (name, email, username, password);	
+END ;;
+
 DELIMITER ;
 
 DROP PROCEDURE IF EXISTS add_action;
@@ -716,6 +730,15 @@ CREATE OR REPLACE VIEW vw_display_group
 AS SELECT group_id, machine_group
 FROM front_group
 ORDER by machine_group;
+
+--
+-- Get user data
+--
+
+CREATE OR REPLACE VIEW vw_user_info
+AS SELECT user_id, name, username, email, password 
+FROM user
+ORDER by name;
 
 
 --
