@@ -4,11 +4,10 @@ require_once "../models/User.php";
 require_once "interfaces/IUserRepository.php";
 require_once "BaseRepository.php";
 
-class UserRepository extends BaseRepository implements IUserRepository {
-    const TABLE = 'user';
+class UserRepository extends BaseRepository implements IUserRepository { 
     public function getByUsername($username) {
         $user = null;
-        $sql = "SELECT user_id, name, username, email, password FROM ".self::TABLE." WHERE username = ?";
+        $sql = "SELECT user_id, name, username, email, password FROM vw_user_info WHERE username = ?";
         if ($stmt = $this->mysqli->prepare($sql)) {
             $stmt->bind_param("s", $param_username);
             $param_username = $username;
@@ -28,23 +27,13 @@ class UserRepository extends BaseRepository implements IUserRepository {
 
     public function doesUserExistByUsername($username) {
         $exists = false;
-        $sql = "SELECT COUNT(*) FROM ".self::TABLE." WHERE username = ?";
-        if ($stmt = $this->mysqli->prepare($sql)) {
-            $stmt->bind_param("s", $param_username);
-            $param_username = $username;
-            if ($stmt->execute()) {
-                $row = $stmt->get_result()->fetch_row();
-                $numberOfRows = $row[0];
-                $exists = $numberOfRows > 0;
-            }
-            $stmt->close();
-        }
-        return $exists;
+        $user = $this->getByUsername($username);
+        return $user != null;        
     }
 
     public function insert($name, $email, $username, $password) {
         $succeded = false;
-        $sql = "INSERT INTO ".self::TABLE." (name, email, username, password) VALUES (?, ?, ?, ?)";
+        $sql = "CALL add_user(?, ?, ?, ?)";
         if ($stmt = $this->mysqli->prepare($sql)) {
             $param_password = password_hash($password, PASSWORD_DEFAULT);
             $stmt->bind_param("ssss", $name, $email, $username, $param_password);
@@ -54,14 +43,6 @@ class UserRepository extends BaseRepository implements IUserRepository {
             $stmt->close();
         }
         return $succeded;
-    }
-
-    public function update($user) {
-        // TODO: Implement update() method.
-    }
-
-    public function delete($username) {
-        // TODO: Implement delete() method.
     }
 }
 ?>
