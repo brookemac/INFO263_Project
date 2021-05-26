@@ -655,6 +655,33 @@ END ;;
 
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS delete_event;
+
+DELIMITER ;;
+
+CREATE PROCEDURE delete_event(
+    IN event_id_to_delete INT
+)
+BEGIN
+	DELETE FROM front_event WHERE event_id = event_id_to_delete;
+END ;;
+
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS update_event;
+
+DELIMITER ;;
+
+CREATE PROCEDURE update_event(
+    IN event_id_to_update INT,
+    IN name VARCHAR(255)
+)
+BEGIN
+	UPDATE front_event SET event_name = name WHERE event_id = event_id_to_update;
+END ;;
+
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS add_weekly;
 
 DELIMITER ;;
@@ -668,18 +695,20 @@ BEGIN
 	insert into front_weekly (event_id, week_of_year, event_year) values (event_id, week_of_year, event_year);
 END ;;
 
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS add_user;
 
 DELIMITER ;;
 
-CREATE PROCEDURE add_user(    
+CREATE PROCEDURE add_user(
     IN name VARCHAR(32),
     IN email VARCHAR(32),
     IN username VARCHAR(32),
     IN password VARCHAR(64)
 )
 BEGIN
-  INSERT INTO user(name, email, username, password) VALUES (name, email, username, password);	
+  INSERT INTO user(name, email, username, password) VALUES (name, email, username, password);
 END ;;
 
 DELIMITER ;
@@ -736,7 +765,7 @@ ORDER by machine_group;
 --
 
 CREATE OR REPLACE VIEW vw_user_info
-AS SELECT user_id, name, username, email, password 
+AS SELECT user_id, name, username, email, password
 FROM user
 ORDER by name;
 

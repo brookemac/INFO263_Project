@@ -20,12 +20,14 @@ $eventRepository = new EventRepository($mysqli);
                 <div class="row clearfix">
                     <div class="col-xs-4">
                         <h2 class="card-inside-title">Start typing to select your event to then view its properties</h2>
-                        <div class="col-xs-6">
+                        <div class="col-xs-8">
                             <input placeholder="Search..." id="event_name_input" class="form-control" />
                         </div>
-                        <div class="col-xs-2">
+                        <div class="col-xs-8">
+                            <button type="button" id="btnEditEvent" class="btn btn-primary" disabled>Edit</button>
                             <button type="button" id="btnDeleteEvent" class="btn btn-primary" disabled>Delete</button>
                         </div>
+                        <input type="hidden" name="answer" id="event_id_hidden" />
                         <input type="hidden" name="answer" id="event_name_hidden" />
                         <datalist id="event_name" class="dle">
                             <?php

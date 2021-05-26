@@ -4,7 +4,7 @@ require_once "../models/User.php";
 require_once "interfaces/IUserRepository.php";
 require_once "BaseRepository.php";
 
-class UserRepository extends BaseRepository implements IUserRepository { 
+class UserRepository extends BaseRepository implements IUserRepository {
     public function getByUsername($username) {
         $user = null;
         $sql = "SELECT user_id, name, username, email, password FROM vw_user_info WHERE username = ?";
@@ -28,12 +28,12 @@ class UserRepository extends BaseRepository implements IUserRepository {
     public function doesUserExistByUsername($username) {
         $exists = false;
         $user = $this->getByUsername($username);
-        return $user != null;        
+        return $user != null;
     }
 
     public function insert($name, $email, $username, $password) {
         $succeded = false;
-        $sql = "CALL add_user(?, ?, ?, ?)";
+        $sql = "call add_user(?, ?, ?, ?)";
         if ($stmt = $this->mysqli->prepare($sql)) {
             $param_password = password_hash($password, PASSWORD_DEFAULT);
             $stmt->bind_param("ssss", $name, $email, $username, $param_password);
