@@ -78,8 +78,20 @@ class EventRepository extends BaseRepository implements IEventRepository {
         return $result;
     }
 
+    public function editEvent($eventId, $updatedName) {
+        $sql = "call update_event(?, ?);";
+        if ($stmt = $this->mysqli->prepare($sql)) {
+            $stmt->bind_param("is", $eventId, $updatedName);
+            if ($stmt->execute()) {
+                return true;
+            }
+            $stmt->close();
+        }
+        return false;
+    }
+
     public function deleteEvent($eventId){
-        $sql = "DELETE FROM front_event WHERE event_id=?;";
+        $sql = "call delete_event(?);";
         if ($stmt = $this->mysqli->prepare($sql)) {
             $stmt->bind_param("i", $eventId);
             if ($stmt->execute()) {
