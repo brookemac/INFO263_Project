@@ -1,5 +1,5 @@
 <?php
-$array_css = array('../css/bootstrap-material-datetimepicker.css', '../css/dataTables.bootstrap.min.css', '../css/waves.min.css');
+$array_css = array('../css/bootstrap-material-datetimepicker.css', '../css/dataTables.bootstrap.min.css');
 
 include 'partials/loggedIn/header.php';
 
@@ -64,6 +64,6 @@ include 'partials/loggedIn/header.php';
         </div>
     </div>
 <?php
-$scripts = array('../js/waves.min.js', '../js/datatable/jquery.dataTables.js', '../js/moment.js', '../js/datatable/dataTables.bootstrap.min.js', '../js/datatable/buttons.html5.min.js', '../js/datatable/buttons.print.min.js', '../js/datatable/dataTables.buttons.min.js', '../js/datatable/jszip.min.js', '../js/datatable/pdfmake.min.js', '../js/bootstrap-material-datetimepicker.js', '../js/datatable/vfs_fonts.js', '../js/view_current_state.js');
+$scripts = array('../js/datatable/jquery.dataTables.js', '../js/moment.js', '../js/datatable/dataTables.bootstrap.min.js', '../js/datatable/buttons.html5.min.js', '../js/datatable/buttons.print.min.js', '../js/datatable/dataTables.buttons.min.js', '../js/datatable/jszip.min.js', '../js/datatable/pdfmake.min.js', '../js/bootstrap-material-datetimepicker.js', '../js/datatable/vfs_fonts.js', '../js/view_current_state.js');
 include 'partials/loggedIn/footer.php'
 ?>
