@@ -1,5 +1,5 @@
 ﻿<?php
-$array_css = array('../css/bootstrap-material-datetimepicker.css', '../css/waves.min.css');
+$array_css = array('../css/bootstrap-material-datetimepicker.css');
 $title = "Add event";
 
 require_once "../database/database_client.php";
@@ -221,6 +221,6 @@ include 'partials/loggedIn/header.php';
         </div>
     </div>
 <?php
-$scripts = array('../js/waves.min.js', '../js/jquery.steps.min.js', '../js/moment.js', '../js/jquery.validate.js', '../js/form-wizard.js', '../js/bootstrap-material-datetimepicker.js', '../js/jquery.inputmask.bundle.js', '../js/add_event.js');
+$scripts = array('../js/jquery.steps.min.js', '../js/moment.js', '../js/jquery.validate.js', '../js/form-wizard.js', '../js/bootstrap-material-datetimepicker.js', '../js/jquery.inputmask.bundle.js', '../js/add_event.js');
 include 'partials/loggedIn/footer.php';
 ?>

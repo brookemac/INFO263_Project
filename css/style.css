@@ -6192,6 +6192,10 @@ fieldset[disabled] .form-control {
       .tabcontrol > .content > .body ul > li {
         display: list-item; }
 
+.home-logo img{
+  width: 100%;
+}
+
 .wizard .content {
   min-height: 245px;
   -webkit-border-radius: 0;

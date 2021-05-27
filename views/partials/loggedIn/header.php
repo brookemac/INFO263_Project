@@ -40,6 +40,7 @@ function getTitle(){
     <link href="../css/bootstrap-3.3.6.min.css" rel="stylesheet">
     <link href="../css/animate.min.css" rel="stylesheet" />
     <link href="../css/all-themes.min.css" rel="stylesheet" />
+    <link href="../css/waves.min.css" rel="stylesheet" />
 <?php
     if (isset($array_css)){
         foreach($array_css as $css_path)
@@ -48,7 +49,7 @@ function getTitle(){
         }
     }
 ?>
-    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/style.min.css" rel="stylesheet">
 </head>
 <body class="theme-red">
     <div class="page-loader-wrapper">
@@ -69,7 +70,6 @@ function getTitle(){
     <nav class="navbar">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
                 <a class="navbar-brand">INFO263 Group Project - <?php echo getTitle();?></a>
             </div>
